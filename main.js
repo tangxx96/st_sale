@@ -116,13 +116,19 @@ Vue.prototype.http_request = function(param, backpage, backtype) {
 				})
 				return
 			}
-			// 返回结果码code判断:0成功，其它归为失败
+			// 返回结果码code判断:0成功，其它归为失败，token失效code待约定
 			if (res.data.code != 0) {
 				this.$refs.uToast.show({
 					title: res.data.errmsg,
 					type: 'error'
 				})
 				return
+			}
+			// token失效code待约定
+			if (res.data.code == -2) {
+				uni.navigateTo({
+					url: '/pages/login/index'
+				})
 			}
 			typeof param.success == "function" && param.success(res.data)
 		},
